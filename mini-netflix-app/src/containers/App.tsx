@@ -1,28 +1,53 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import { connect } from 'react-redux';
+
 import './App.css';
 
-class App extends Component {
+import { getVideos } from '../actions/videos';
+
+interface IProps {
+  dispatch: () => void
+}
+
+interface IState {
+
+}
+
+interface ComponentDispatchProps {
+  getVideos: typeof getVideos;
+}
+// not necessary to combine them into another type, but it cleans up the next line
+type ComponentProps = IState & ComponentDispatchProps & IProps;
+
+class App extends Component<ComponentProps> {
+  constructor(prop: IProps) {
+    super(prop);
+
+    // this.state = {
+
+    // }
+  }
+  componentDidMount() {
+    this.props.dispatch(getVideos());
+  }
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.tsx</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        hello here
       </div>
     );
   }
 }
 
-export default App;
+// Connect App to the Redux store so that it has this.props.matchesStore
+const mapStateToProps = (state: object) => {
+  return {
+    
+  };
+};
+
+
+export default connect<IState, ComponentDispatchProps, IProps>(
+  mapStateToProps,
+  // mapDispatchToProps
+)(App);
